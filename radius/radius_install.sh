@@ -57,6 +57,7 @@ function set_daloradius4(){
 	sleep 3
 	sed -i "s/\['CONFIG_DB_USER'\] = 'root'/\['CONFIG_DB_USER'\] = 'radius'/g"  /var/www/html/daloradius/library/daloradius.conf.php
 	sed -i "s/\['CONFIG_DB_PASS'\] = ''/\['CONFIG_DB_PASS'\] = 'p0radius_0p'/g" /var/www/html/daloradius/library/daloradius.conf.php
+	sed -i "s/mysql/mysqli/g" /var/www/html/daloradius/library/daloradius.conf.php
 	yum -y install epel-release
 	yum -y install php-pear-DB
 	systemctl restart mariadb.service 
@@ -107,10 +108,11 @@ Listen 9090
 cd /var/www/html/
 rm -rf *
 wget http://180.188.197.212/down/daloradius20180418.tar.gz 
-tar xzvf daloradius20180418.tar.gz 
+tar xzvf daloradius20180418.tar.gz
 rm -rf daloradius20180418.tar.gz
 chown -R apache:apache /var/www/html/daloradius
 service httpd restart
+sed -i "s/mysql/mysqli/g" /var/www/html/daloradius/library/daloradius.conf.php
 mkdir /usr/mysys/
 cd /usr/mysys/
 wget http://180.188.197.212/down/dbback.tar.gz
